@@ -1,0 +1,2810 @@
+{
+  "name": "Corporate Relations",
+  "nodes": [
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"to\": \"recipient@example.com\",\n  \"subject\": \"Meeting Reminder: Project Sync\",\n  \"body\": \"Hi John,\\n\\nThis is a quick reminder about our sync-up meeting scheduled for tomorrow at 11 AM. Let me know if you’d like to shift the timing.\\n\\nBest,\\nAkshat\"\n}\n",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1616,
+        240
+      ],
+      "id": "a52de512-b823-4058-9a40-cd70a61e4210",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-flash-lite-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        240
+      ],
+      "id": "9bf08656-a095-4a9d-9e37-c11299353e29",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "yEWAuCieAPLXckax",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1VKaUX3bGMWMTItrZiY1ozpZsYnepiS4rMOhPOnc2LeQ",
+          "mode": "list",
+          "cachedResultName": "Corporate Relations Automation (Managers) 26-27",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VKaUX3bGMWMTItrZiY1ozpZsYnepiS4rMOhPOnc2LeQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VKaUX3bGMWMTItrZiY1ozpZsYnepiS4rMOhPOnc2LeQ/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        304,
+        496
+      ],
+      "id": "2958bf9e-3a71-426c-bded-504f13694b79",
+      "name": "Get Allotments",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "p4mDNkehXBnFjtgJ",
+          "name": "Google Sheets CR Mail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Manager Name :  {{ $('Get Allotments').item.json.Manager }}\nCompany Name : {{ $('Get Allotments').item.json['Company Name'] }}\nPoC Name : {{ $('Get Allotments').item.json['PoC Name'] }}\nPoC Email ID : {{ $('Get Allotments').item.json['PoC Email ID'] }}\nCompany Commitment : {{ $json.output }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "#Overview\nYou are the ultimate mail drafting assistant. You draft cold mails for E-Cell IIT Madras and send them to company PoCs in HTML format.\n\n#Rules\n1)Send the mail to \"PoC Email ID\" from the user prompt\n\n2)Subject of the mail:\n\nAssociation with Entrepreneurship Cell IIT Madras || <Company Name>\n\nReplace <Company Name> with the actual \"Company Name\" in the user prompt\n\n3) Body of the mail:\nHi <strong>&lt;PoC Name&gt;</strong>,\n<br><br>\nGreetings from Entrepreneurship Cell, IIT Madras! I am <strong>&lt;Manager Name&gt;</strong>, Manager of Corporate Relations at E-Cell IIT Madras, a student-led non-profit fostering entrepreneurship across India. We’ve been impressed by <strong>&lt;Company Name&gt;</strong>’s commitment to &lt;Company Commitment&gt;, which closely aligns with our mission to empower change-makers nationwide.\n<br><br>\n<strong>E-Summit 2027</strong>, taking place in early January 2027, is our flagship 3-day event attracting students, entrepreneurs, startups, VCs, industry leaders, and investors from across India. Building on last year’s success, which saw more than <strong>15,000+ attendees</strong> and <strong>500+ startups</strong>, we are excited to amplify the summit’s impact further. We have been privileged to host distinguished speakers in our flagship Inspirit lecture series, including <strong>Shri Piyush Goyal, Kiran Bedi, Ankur Warikoo, Kunal Bahl, Ritesh Agarwal, and Phani Kishan</strong>, among others, offering unmatched insights and inspiration to our community.\n<br><br>\nOur esteemed partners, such as <strong>Google, Microsoft, Westbridge Capital, Kotak Mahindra Bank, Honda, Inventus Law, and TIIC</strong>, have been instrumental in elevating E-Summit as one of India’s premier entrepreneurship platforms. Your brand would join this distinguished and influential group.\n<br><br>\nWe’d be honoured to welcome <strong>&lt;Company Name&gt;</strong> as an Official Sponsor in 2027. Please find below some of the deliverables from our end:\n<br>\n<ul>\n<li>Recognition as the Official  Sponsor for E-Summit 2027.</li>\n<li>Opportunity to interact and network with more than <strong>500+ early-stage startups</strong> from across the country, selected through a highly competitive process.</li>\n<li>Offline Branding in front of <strong>10,000+ IIT M students, delegates, and professors</strong> through standees and banners in strategic locations across the campus.</li>\n<li>Emcee mentions and video advertisements before and after the start of all online and offline sessions.</li>\n<li>Opportunity to conduct exclusive workshops, customized events, and seminars for the participating startups and students.</li>\n<li>Logo integration on our website and branding opportunity on our social media handles with <strong>55K+ followers</strong>, with an even greater reach through our team of 300+ members.</li>\n<li>Sponsor Visibility in the <strong>25,000+ Alumni Network</strong> of IIT Madras via the IIT Madras Alumni Association broadcasting email network that will be sending promotional and invitational emails to the Alumni to participate in the entrepreneurial festival E-Summit of IIT Madras.</li>\n<li>Customised posts and stories on the E-Cell IITM Instagram with <strong>15k+ followers</strong> for maximum sponsor visibility.</li>\n</ul>\n<br>\nExpectations from the sponsor:\n<br>\n<ul>\n<li><strong>Monetary Support</strong>: For the events and initiatives conducted during E-Summit 2027.</li>\n<li>Logo Usage: <strong>&lt;Company Name&gt;</strong>'s Logo will be used in all promotional material after the event or conclave launch till the conclusion of the event or conclave.</li>\n<li>Publicity: <strong>&lt;Company Name&gt;</strong> can, in goodwill, help with the outreach of our events in their ecosystem.</li>\n</ul>\n<br>\nWe are open to fine-tuning these deliverables on mutually agreeable terms. We would love to get on a call to discuss this further in detail.\n<br><br>\nWe look forward to having <strong>&lt;Company Name&gt;</strong> as our <strong>Official Sponsor</strong> for E-Summit 2027. We hope to hear from you soon and begin a mutually beneficial, long-lasting relationship in a positive direction.\n<br><br><br>\n\nWarm regards,\n<br><br>\n<strong>&lt;Manager Name&gt;</strong>\n<br>\n<strong>Manager | Corporate Relations</strong>\n<br>\n<strong>Entrepreneurship-Cell, IIT Madras</strong>\n<br>\n<strong>Email : corporate_ecell@smail.iitm.ac.in</strong>\n<br>\n<strong> Ph : &lt;Manager Mobile Number&gt; </strong>\nReplace <PoC Name> with \"PoC Name\" from user input.\nReplace <Company Name> with \"Company Name\" from user input.\nReplace <Manager Name> with \"Manager Name\" from user input.\nReplace <Company Commitment> with \"Company Commitment\" from user input.\nReplace <Manager Mobile Number> with {{ $('Get Allotments').item.json.Name }}'s Mobile Number. Here is the list of everyone's mobile number:\n1) Abhinav Atmanand : +91 9482456500\n2) Ishaan Balakrishnan : +91 8698018640\n3) Kanishk Kanojia : +91 9953301113\n4) Kaveesh Diwan : +91 7775811272\n5) Koushik Motajigari : +91 6281315916\n6) Madhura Gurav : +91 9834947628\n7) M Rithiha : +91 9487463599\n8) Mukunthan K U : +91 9380180076\n9) Rajakarthikeyan R : +91 8431942480\n10) Srushti Shewalkar : +91 7498400618\n\nMake sure the whole body is properly indented.\n\n#Final Output\nOnly output 2 fields in the final output: \n1) Subject of the mail\n2) Body of the mail in HTML format\nNo summaries and explanations required.\n\n#Notes\n1) Stick to the above format and do not try to make up stuff.\nImportant: because there are bandwidth limitations on APIs, if the number of emails is more than 15, you should label them in batches, you ask for 15 emails label them and then go for the next batch until the end\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1584,
+        48
+      ],
+      "id": "98011637-9441-42ee-9e1e-42c2b081bc3a",
+      "name": "Mail Writer"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Get Allotments').item.json['PoC Email ID'] }}",
+        "subject": "={{ $json.output.subject }}",
+        "message": "={{ $json.output.body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2128,
+        464
+      ],
+      "id": "1cc9b1d6-6ea8-4539-b3e8-f20c0cad7199",
+      "name": "Send Mail",
+      "webhookId": "1218a969-3e79-43a7-a495-91249a48bcd5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "7emuhYg7m9zP6pO9",
+          "name": "CR Email"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1VKaUX3bGMWMTItrZiY1ozpZsYnepiS4rMOhPOnc2LeQ",
+          "mode": "list",
+          "cachedResultName": "Corporate Relations Automation (Managers) 26-27",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VKaUX3bGMWMTItrZiY1ozpZsYnepiS4rMOhPOnc2LeQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VKaUX3bGMWMTItrZiY1ozpZsYnepiS4rMOhPOnc2LeQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "done",
+            "Message ID": "={{ $json.threadId }}",
+            "PoC Email ID": "={{ $('Get Allotments').item.json['PoC Email ID'] }}",
+            "row_number": "={{ $('Get Allotments').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Manager",
+              "displayName": "Manager",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PoC Name",
+              "displayName": "PoC Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PoC Email ID",
+              "displayName": "PoC Email ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Type",
+              "displayName": "Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Message ID",
+              "displayName": "Message ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Reminder 1",
+              "displayName": "Reminder 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Reminder 2",
+              "displayName": "Reminder 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Reminder 3",
+              "displayName": "Reminder 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Reminder 4",
+              "displayName": "Reminder 4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "threadId",
+              "displayName": "threadId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "labelIds",
+              "displayName": "labelIds",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        2336,
+        512
+      ],
+      "id": "f70680db-5c1e-4cde-8041-62a2953b2a8e",
+      "name": "Update Sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "p4mDNkehXBnFjtgJ",
+          "name": "Google Sheets CR Mail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        64,
+        496
+      ],
+      "id": "82ba2825-d910-4d22-b563-f51f1496e6be",
+      "name": "Main Mail Trigger"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        896,
+        1440
+      ],
+      "id": "bf95764e-d2db-4c51-b1e0-73f724345da0",
+      "name": "Reminder 1 Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1VKaUX3bGMWMTItrZiY1ozpZsYnepiS4rMOhPOnc2LeQ",
+          "mode": "list",
+          "cachedResultName": "Corporate Relations Automation (Managers) 26-27",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VKaUX3bGMWMTItrZiY1ozpZsYnepiS4rMOhPOnc2LeQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VKaUX3bGMWMTItrZiY1ozpZsYnepiS4rMOhPOnc2LeQ/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1136,
+        1440
+      ],
+      "id": "79922c2f-9cbe-466f-8cf8-04414f563e85",
+      "name": "Get Allotments1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "p4mDNkehXBnFjtgJ",
+          "name": "Google Sheets CR Mail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1VKaUX3bGMWMTItrZiY1ozpZsYnepiS4rMOhPOnc2LeQ",
+          "mode": "list",
+          "cachedResultName": "Corporate Relations Automation (Managers) 26-27",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VKaUX3bGMWMTItrZiY1ozpZsYnepiS4rMOhPOnc2LeQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VKaUX3bGMWMTItrZiY1ozpZsYnepiS4rMOhPOnc2LeQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "PoC Email ID": "={{ $('Get Allotments1').item.json['PoC Email ID'] }}",
+            "Reminder 1": "={{ $json.threadId }}"
+          },
+          "matchingColumns": [
+            "PoC Email ID"
+          ],
+          "schema": [
+            {
+              "id": "Manager",
+              "displayName": "Manager",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PoC Name",
+              "displayName": "PoC Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PoC Email ID",
+              "displayName": "PoC Email ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Type",
+              "displayName": "Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Message ID",
+              "displayName": "Message ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Reminder 1",
+              "displayName": "Reminder 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Reminder 2",
+              "displayName": "Reminder 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Reminder 3",
+              "displayName": "Reminder 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Reminder 4",
+              "displayName": "Reminder 4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        2608,
+        1456
+      ],
+      "id": "c3ec9004-69b2-4b52-aa44-2f65bea2fa35",
+      "name": "Update Sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "p4mDNkehXBnFjtgJ",
+          "name": "Google Sheets CR Mail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        896,
+        1744
+      ],
+      "id": "1c6c3b94-653a-4771-924a-3c8ef2f32651",
+      "name": "Reminder 2 Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A",
+          "mode": "list",
+          "cachedResultName": "n8n mock allotment sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Reminder 2",
+              "lookupValue": "To Do"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1152,
+        1744
+      ],
+      "id": "dbdc47f5-20c7-4c7f-a30a-849b82650e8c",
+      "name": "Get Allotments2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "p4mDNkehXBnFjtgJ",
+          "name": "Google Sheets CR Mail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "={{ $('Get Allotments1').item.json['Message ID'] }}",
+        "message": "=<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Follow-up on Potential Partnership</title>\n</head>\n<body style=\"font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #333333;\">\n    <p>Hi {{ $('Get Allotments1').item.json['PoC Name'] }},</p>\n    \n    <p>I am writing to follow up on my previous email regarding a potential partnership between {{ $('Get Allotments1').item.json['Company Name'] }} and the Entrepreneurship Cell, IIT Madras. I wanted to check if you have had an opportunity to review my message and if there are any questions I can address at this stage.</p>\n    \n    <p>If you are not the appropriate point of contact for this discussion, I would appreciate it if you could kindly direct me to the relevant person.</p>\n    \n    <p>Thank you for your time, and I look forward to your response.</p>\n    \n    <p>Best regards,<br>\n    {{ $json.emailSignature }}</p>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2160,
+        1456
+      ],
+      "id": "b211e3e3-8f3b-43c5-98ce-bf71b20c1d0b",
+      "name": "Send Reminder 1",
+      "webhookId": "c7f70a29-39a1-4872-bbd3-651b4c9d5c14",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "7emuhYg7m9zP6pO9",
+          "name": "CR Email"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "={{ $('Get Allotments2').item.json['Message ID'] }}",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2160,
+        1744
+      ],
+      "id": "5772413f-159e-4e3c-9d1e-7ce29dd167b5",
+      "name": "Send Reminder 2",
+      "webhookId": "c7f70a29-39a1-4872-bbd3-651b4c9d5c14",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "7emuhYg7m9zP6pO9",
+          "name": "CR Email"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A",
+          "mode": "list",
+          "cachedResultName": "n8n mock allotment sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Get Allotments2').item.json.row_number }}",
+            "Reminder 2": "Done"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PoC Name",
+              "displayName": "PoC Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PoC Email ID",
+              "displayName": "PoC Email ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Message ID",
+              "displayName": "Message ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reminder 1",
+              "displayName": "Reminder 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reminder 2",
+              "displayName": "Reminder 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Reminder 3",
+              "displayName": "Reminder 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reminder 4",
+              "displayName": "Reminder 4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        2400,
+        1744
+      ],
+      "id": "a73a58bb-d8d3-434e-ad52-7c06a42900eb",
+      "name": "Update Sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "p4mDNkehXBnFjtgJ",
+          "name": "Google Sheets CR Mail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        896,
+        2048
+      ],
+      "id": "060d7e41-6e2f-44d3-943b-5dbd192d1f1b",
+      "name": "Reminder 3 Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A",
+          "mode": "list",
+          "cachedResultName": "n8n mock allotment sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Reminder 3",
+              "lookupValue": "To Do"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1152,
+        2048
+      ],
+      "id": "58fa7a97-9966-4d1b-b53d-fd68b090e548",
+      "name": "Get Allotments3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "p4mDNkehXBnFjtgJ",
+          "name": "Google Sheets CR Mail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "={{ $('Get Allotments3').item.json['Message ID'] }}",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1920,
+        2048
+      ],
+      "id": "d23e59a3-549f-4148-a1e5-e427465624cd",
+      "name": "Send Reminder 3",
+      "webhookId": "c7f70a29-39a1-4872-bbd3-651b4c9d5c14",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "7emuhYg7m9zP6pO9",
+          "name": "CR Email"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A",
+          "mode": "list",
+          "cachedResultName": "n8n mock allotment sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Get Allotments3').item.json.row_number }}",
+            "Reminder 3": "Done"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PoC Name",
+              "displayName": "PoC Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PoC Email ID",
+              "displayName": "PoC Email ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Message ID",
+              "displayName": "Message ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reminder 1",
+              "displayName": "Reminder 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reminder 2",
+              "displayName": "Reminder 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reminder 3",
+              "displayName": "Reminder 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Reminder 4",
+              "displayName": "Reminder 4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        2176,
+        2048
+      ],
+      "id": "06fae971-d5ec-4c5d-a89d-9a7a2c60fad6",
+      "name": "Update Sheet3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "p4mDNkehXBnFjtgJ",
+          "name": "Google Sheets CR Mail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        912,
+        2320
+      ],
+      "id": "7970c091-a922-4d9a-a55b-0e50e59d334e",
+      "name": "Reminder 4 Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A",
+          "mode": "list",
+          "cachedResultName": "n8n mock allotment sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Reminder 4",
+              "lookupValue": "To Do"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1168,
+        2320
+      ],
+      "id": "780d2219-1884-4358-b804-391b381817da",
+      "name": "Get Allotments4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "p4mDNkehXBnFjtgJ",
+          "name": "Google Sheets CR Mail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "={{ $('Get Allotments4').item.json['Message ID'] }}",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1936,
+        2320
+      ],
+      "id": "bc10a164-2783-42cc-9b8a-0e789d6ceb40",
+      "name": "Send Reminder 4",
+      "webhookId": "c7f70a29-39a1-4872-bbd3-651b4c9d5c14",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "7emuhYg7m9zP6pO9",
+          "name": "CR Email"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A",
+          "mode": "list",
+          "cachedResultName": "n8n mock allotment sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13WnOzdDjXc_EX1mVYwsFFwvxoJgOGqdUlJNb2IuuO4A/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Get Allotments4').item.json.row_number }}",
+            "Reminder 4": "Done"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PoC Name",
+              "displayName": "PoC Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PoC Email ID",
+              "displayName": "PoC Email ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Message ID",
+              "displayName": "Message ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reminder 1",
+              "displayName": "Reminder 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reminder 2",
+              "displayName": "Reminder 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reminder 3",
+              "displayName": "Reminder 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reminder 4",
+              "displayName": "Reminder 4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        2176,
+        2320
+      ],
+      "id": "b6d7f80e-0efb-49bc-b914-d192f88a054c",
+      "name": "Update Sheet4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "p4mDNkehXBnFjtgJ",
+          "name": "Google Sheets CR Mail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-flash-lite-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        224
+      ],
+      "id": "e705b1a0-a487-47f5-b341-e876ac068fbc",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "yEWAuCieAPLXckax",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=#Overview\nYou are a helpful assistant that outputs the commitment of a company given the company name.\n\n#Rules\n1) Find the company commitment given the company name \n2) Output it in a way so that it completes the following statement:\nThe company's commitment to <company commitment>\nYou only have to fill <company commitment> over here.\n3) Make sure that it is grammatically correct.\n4) The company commitment should be of a single line.\n5) Keep the output as short as possible\n\n#Final Output\nOnly output <company commitment>. No explanations or descriptions needed. Do not end the output with a full stop (.)\n\n#Example\nCompany Name: GeeksforGeeks\nOutput: providing quality educational content and resources for coding and programming enthusiasts.\nImportant: because there are bandwidth limitations on APIs, if the number of emails is more than 15, you should label them in batches, you ask for 15 emails label them and then go for the next batch until the end\n\nCompany Name: {{ $json['Company Name'] }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1184,
+        48
+      ],
+      "id": "d3cf0cf4-7b51-4233-ae1f-5b93432d4f7d",
+      "name": "Commitment Generator"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1648,
+        1904
+      ],
+      "id": "ddac3eb3-7f6c-4ab5-bbe2-dd90b8eac763",
+      "name": "Google Gemini Chat Model4",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "MaQrChTHP7mf0NhJ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1424,
+        2192
+      ],
+      "id": "d2d33326-3f7a-45d1-8aea-fa42052a4493",
+      "name": "Google Gemini Chat Model5",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "MaQrChTHP7mf0NhJ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        2496
+      ],
+      "id": "19e63689-ac25-4a6f-8dc8-2567da5574e2",
+      "name": "Google Gemini Chat Model6",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "MaQrChTHP7mf0NhJ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=#Overview\nYou are the ultimate mail drafting assistant. You draft reminders to cold mails for E-Cell IIT Madras and send them to company PoCs in HTML format.\n\n#Rules\n1) Body of the mail will be:\nDear <strong><PoC Name></strong>,\n<br><br>\nWould it be possible for us to arrange a brief conversation in the upcoming days? If my timing is off, I certainly understand. Your willingness to engage in this discussion is highly appreciated as we seek to further our professional connection.\n<br><br>\nWarm regards,\n<br>\n<strong><Manager Name></strong>\n<br>\n<strong>Manager | Corporate Relations</strong>\n<br>\n<strong>Entrepreneurship-Cell, IIT Madras</strong>\n<br>\n<strong>Email : corporate_ecell@smail.iitm.ac.in</strong>\n<br>\n<strong>Ph : <Manager Mobile Number> </strong>\n\n\nReplace <PoC Name> with \"PoC Name\" from user prompt\nReplace <Company Name> with \"Company Name\" from user prompt\nReplace <Manager Name> with \"Manager Name\" from user prompt\nMake sure the whole body is properly indented.\nReplace <Manager Mobile Number> with {{ $json.Name }}'s Mobile Number. Here is the list of everyone's mobile number:\n1) Aditya Chaudhary : +91 8851852961\n2) Akshat Daga : +91 9987424107\n3) Arsh Mathur : +91 8619885770\n4) Dhriti Pallavi : +91 8310336140\n5) Kashvee Lalwani : +91 9624024774\n6) Ravin Wadhwani : +91 7710833949\n7) Sudhanva N Rao : +91 8431771794\n8) Vikranth Choudary Doppalapudi : +91 9032221333\n9) Samvedh K M : +91 9632828675\n10) Maanya N Rao : +91 6361535267\n\n#Final Output\nOnly output the body of the mail in raw HTML format. Do NOT wrap the output in triple backticks or any code blocks. Do NOT include the word \"html\" or any tags outside the mail body. No explanations or summaries needed.\n\n#Notes\nStick to the above format and do not make up stuff\n\nPoC Name :  {{ $json['PoC Name'] }}\nCompany Name : {{ $json['Company Name'] }}\nManager Name : {{ $json.Name }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        2048
+      ],
+      "id": "66cc89d4-898a-4701-bbd9-f5eead52c8fd",
+      "name": "Reminder 3 Writer"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=#Overview\nYou are the ultimate mail drafting assistant. You draft reminders to cold mails for E-Cell IIT Madras and send them to company PoCs in HTML format.\n\n#Rules\n1) Body of the mail will be:\nHi <strong><PoC Name></strong>,\n<br><br>\nIt would have been a valuable opportunity to collaborate with <strong><Company Name></strong> for this year’s E-Cell initiatives. However, we fully understand and respect that the timing might not align with your current priorities.\n<br><br>\nWe sincerely hope to have your support in the future for our upcoming initiatives. Should there be an opportunity where our events align with your interests and you wish to <strong>explore collaboration</strong>, please feel free to reach out at any time. If you would like more information about our programs or the audiences we engage, I would be happy to share further details whenever convenient. Your consideration and potential involvement in our future endeavors would be greatly appreciated.\n<br><br>\nWarm regards,\n<br>\n<strong><Manager Name></strong>\n<br>\n<strong>Manager | Corporate Relations</strong>\n<br>\n<strong>Entrepreneurship-Cell, IIT Madras</strong>\n<br>\n<strong>Email : corporate_ecell@smail.iitm.ac.in</strong>\n<br>\n<strong>Ph : <Manager Mobile Number> </strong>\n\n\nReplace <PoC Name> with \"PoC Name\" from user prompt\nReplace <Company Name> with \"Company Name\" from user prompt\nReplace <Manager Name> with \"Manager Name\" from user prompt\nMake sure the whole body is properly indented.\nReplace <Manager Mobile Number> with {{ $json.Name }}'s Mobile Number. Here is the list of everyone's mobile number:\n1) Aditya Chaudhary : +91 8851852961\n2) Akshat Daga : +91 9987424107\n3) Arsh Mathur : +91 8619885770\n4) Dhriti Pallavi : +91 8310336140\n5) Kashvee Lalwani : +91 9624024774\n6) Ravin Wadhwani : +91 7710833949\n7) Sudhanva N Rao : +91 8431771794\n8) Vikranth Choudary Doppalapudi : +91 9032221333\n9) Samvedh K M : +91 9632828675\n10) Maanya N Rao : +91 6361535267\n\n#Final Output\nOnly output the body of the mail in raw HTML format. Do NOT wrap the output in triple backticks or any code blocks. Do NOT include the word \"html\" or any tags outside the mail body. No explanations or summaries needed.\n\n#Notes\nStick to the above format and do not make up stuff\n\nPoC Name :  {{ $json['PoC Name'] }}\nCompany Name : {{ $json['Company Name'] }}\nManager Name : {{ $json.Name }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1536,
+        2320
+      ],
+      "id": "6561fe6c-8bfb-4435-8988-2507facc4021",
+      "name": "Reminder 4 Writer"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=#Overview\nYou are the ultimate mail drafting assistant. You draft reminders to cold mails for E-Cell IIT Madras and send them to company PoCs in HTML format.\n\n#Rules\n1) Body of the mail will be:\nDear <strong><PoC Name></strong>,\n<br><br>\nWe would love to get in touch with you for an association. We would greatly value the opportunity to schedule a meeting with you in the coming days to engage in a discussion about the intricacies of our prospective partnership. \n<br><br>\nWe sincerely look forward to the opportunity to connect and explore the potential synergies between our organizations.\n<br><br>\nWarm regards,\n<br>\n<strong><Manager Name></strong>\n<br>\n<strong>Manager | Corporate Relations</strong>\n<br>\n<strong>Entrepreneurship-Cell, IIT Madras</strong>\n<br>\n<strong>Email : corporate_ecell@smail.iitm.ac.in</strong>\n<br>\n<strong> Ph : <Manager Mobile Number> </strong>\n\nReplace <PoC Name> with \"PoC Name\" from user prompt\nReplace <Company Name> with \"Company Name\" from user prompt\nReplace <Manager Name> with \"Manager Name\" from user prompt\nMake sure the whole body is properly indented.\nReplace <Manager Mobile Number> with {{ $json.Name }}'s Mobile Number. Here is the list of everyone's mobile number:\n1) Aditya Chaudhary : +91 8851852961\n2) Akshat Daga : +91 9987424107\n3) Arsh Mathur : +91 8619885770\n4) Dhriti Pallavi : +91 8310336140\n5) Kashvee Lalwani : +91 9624024774\n6) Ravin Wadhwani : +91 7710833949\n7) Sudhanva N Rao : +91 8431771794\n8) Vikranth Choudary Doppalapudi : +91 9032221333\n9) Samvedh K M : +91 9632828675\n10) Maanya N Rao : +91 6361535267\n\n#Final Output\nOnly output the body of the mail in raw HTML format. Do NOT wrap the output in triple backticks or any code blocks. Do NOT include the word \"html\" or any tags outside the mail body. No explanations or summaries needed.\n\n#Notes\nStick to the above format and do not make up stuff\n\nPoC Name :  {{ $json['PoC Name'] }}\nCompany Name : {{ $json['Company Name'] }}\nManager Name : {{ $json.Name }}\n\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1744,
+        1744
+      ],
+      "id": "54f212e1-b23d-4930-abb6-8a9e6726cc69",
+      "name": "Reminder 2 Writer"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1584,
+        384
+      ],
+      "id": "aebd2125-1c2a-4d49-9630-a14ac17bfc5a",
+      "name": "Google Gemini Chat Model7",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "MaQrChTHP7mf0NhJ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2768,
+        512
+      ],
+      "id": "f4796e2b-29a9-4157-aa13-138b7726b589",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "content": "##Reminder 1",
+        "height": 304,
+        "width": 3264,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        1408
+      ],
+      "id": "2438730f-cf5f-4103-8dda-238b4890a65b",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "##Reminder 2",
+        "height": 288,
+        "width": 3264,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        1712
+      ],
+      "id": "08318ac6-f605-41cb-8754-1f9f0878eaa6",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "##Reminder 3",
+        "height": 288,
+        "width": 3264,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        2016
+      ],
+      "id": "41e5c6bf-8a61-4dcc-a071-afd0cf93be58",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "##Reminder 3",
+        "height": 304,
+        "width": 3264,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        2304
+      ],
+      "id": "af16c22e-a411-4b3e-813f-7b59aad2cff7",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "batchSize": 8,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        736,
+        496
+      ],
+      "id": "18a0cf90-b8ab-4a8e-8ae8-257a87293c66",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "batchSize": 5,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1632,
+        1440
+      ],
+      "id": "bc4f417c-58fb-4511-9a1b-e4efacc0fa74",
+      "name": "Loop Over Items2"
+    },
+    {
+      "parameters": {
+        "batchSize": 5,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1568,
+        1744
+      ],
+      "id": "ed6bb4a4-62a3-41e6-b45a-4f4919305e34",
+      "name": "Loop Over Items3"
+    },
+    {
+      "parameters": {
+        "batchSize": 5,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1344,
+        2048
+      ],
+      "id": "36398a8e-15c1-4911-beda-ad21f6f9d8fd",
+      "name": "Loop Over Items4"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1360,
+        2320
+      ],
+      "id": "d5eddbb0-449e-46eb-bb6c-332f987906c0",
+      "name": "Loop Over Items5"
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3344,
+        528
+      ],
+      "id": "08808c68-2598-4054-ba61-f605cf56d29f",
+      "name": "Wait",
+      "webhookId": "5f67ae8c-beca-43d3-bbb9-1aeb45c36e50"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-flash-lite-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        736
+      ],
+      "id": "230d9aa4-d56c-46bf-a2b8-99f1460444c4",
+      "name": "Google Gemini Chat Model8",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "yEWAuCieAPLXckax",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=#Overview\nYou are a helpful assistant that outputs the commitment of a company given the company name.\n\n#Rules\n1) Find the company commitment given the company name \n2) Output it in a way so that it completes the following statement:\nThe company's commitment to <company commitment>\nYou only have to fill <company commitment> over here.\n3) Make sure that it is grammatically correct.\n4) The company commitment should be of a single line.\n5) Keep the output as short as possible\n\n#Final Output\nOnly output <company commitment>. No explanations or descriptions needed. Do not end the output with a full stop (.)\n\n#Example\nCompany Name: GeeksforGeeks\nOutput: providing quality educational content and resources for coding and programming enthusiasts.\nImportant: because there are bandwidth limitations on APIs, if the number of emails is more than 15, you should label them in batches, you ask for 15 emails label them and then go for the next batch until the end\n\nCompany Name:  {{ $json['Company Name'] }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        1184,
+        512
+      ],
+      "id": "568139f8-ef4e-4c3b-94d7-ba1bc2f35e9c",
+      "name": "Commitment Generator1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-flash-lite-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        672
+      ],
+      "id": "3c14e007-89b1-4829-a627-d813077dbe6f",
+      "name": "Google Gemini Chat Model9",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "yEWAuCieAPLXckax",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Manager Name : {{ $('Get Allotments').item.json.Manager }}\nCompany Name : {{ $('Get Allotments').item.json['Company Name'] }}\nPoC Name : {{ $('Get Allotments').item.json['PoC Name'] }}\nPoC Email ID : {{ $('Get Allotments').item.json['PoC Email ID'] }}\nCompany Commitment : {{ $json.output }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=#Overview\nYou are the ultimate mail drafting assistant. You draft cold mails for E-Cell IIT Madras and send them to company PoCs in HTML format.\n\n#Rules\n1)Send the mail to \"PoC Email ID\" from the user prompt\n\n2)Subject of the mail:\n\nAssociation with Entrepreneurship Cell IIT Madras || <Company Name>\n\nReplace <Company Name> with the actual \"Company Name\" in the user prompt\n\n3) Body of the mail:\n\nHi <strong><PoC Name></strong>,\n<br><br>\nI hope this message finds you well. I am <strong><Manager Name></strong>, Manager of Corporate Relations at E-Cell IIT Madras, a student-led non-profit fostering entrepreneurship across India. We’ve been impressed by <strong><Company Name></strong>’s commitment to <Company Commitment>, and I see a strong alignment between our missions.\n<br><br>\nLast year, our discussions progressed positively, and it appeared we were on the verge of formalizing a partnership for E-Summit 2025. Although unforeseen circumstances prevented us from moving forward then, we greatly appreciated your team’s enthusiasm, which laid a strong foundation for future collaboration.\n<br><br>\nAs we prepare for <strong>E-Summit 2026 in March</strong>, following a landmark 2025 edition that attracted over 35,000 participants and 2,500 startups, we are eager to revisit this opportunity. With partners such as Westbridge Capital, Kotak Mahindra Bank, Honda, Qapita, TIIC, and many others supporting us, your brand would join a distinguished group\n<br><br>\nWe’d be honored to welcome <strong><Company Name></strong> as an Official Sponsor in 2026. Please find below some of the deliverables from our end:\n<br><br>\n<ul>\n<li>Recognition as the <strong>Official Sponsor</strong> for E-Summit 2026.</li>\n<li>Opportunity to interact and network with more than <strong>700 early-stage startups</strong> from across the country, selected through a highly competitive process.</li>\n<li>Offline Branding in front of <strong>15,000+</strong> IIT M students, delegates, and professors through standees and banners in strategic locations across the campus</li>\n<li>Opportunity to conduct <strong>exclusive workshops, customized events</strong>, and seminars for the participating startups and students</li>\n<li><strong>Logo integration</strong> on our website and branding opportunity on our social media handles with 50K+ followers, with an even greater reach through our team of 250+ members.</li>\n<li>Sponsor Visibility in the <strong>25,000+ Alumni Network</strong> of IIT Madras via the IIT Madras Alumni Association broadcasting email network that will be sending promotional and invitational emails to the Alumni to participate in the entrepreneurial festival E-Summit of IIT Madras.</li>\n</ul>\n<br>\nExpectations from the sponsor:\n<br>\n<ul>\n<li><strong>Monetary Support</strong>: For the events and initiatives conducted during E-Summit 2026.</li>\n<li>Logo Usage: <strong><Company Name></strong>'s Logo will be used in all the promotional material after the event or conclave launch till the conclusion of the event or conclave.</li>\n<li>Publicity: <strong><Company Name></strong> can, in goodwill, help with the outreach of our events in their ecosystem.</li>\n</ul>\n<br>\nWe are open to fine-tuning these deliverables on mutually agreeable terms. We would love to get on a call to discuss this further in detail.\n<br><br>\nWe look forward to having <strong><Company Name></strong> as our <strong>Official Sponsor</strong> for E-Summit 2026. We hope to hear from you soon and begin a mutually beneficial, long-lasting relationship in a positive direction.\n<br><br>\nYou can view the pitch deck here:  \n\n<br><br><br>\n\n\nWarm regards,\n<br>\n<strong><Manager Name></strong>\n<br>\n<strong>Manager | Corporate Relations</strong>\n<br>\n<strong>Entrepreneurship-Cell, IIT Madras</strong>\n<br>\n<strong>Email : corporate_ecell@smail.iitm.ac.in</strong>\n<br>\n<strong> Ph : <Manager Mobile Number> </strong>\n\n\nReplace <PoC Name> with \"PoC Name\" from user input.\nReplace <Company Name> with \"Company Name\" from user input.\nReplace <Manager Name> with \"Manager Name\" from user input.\nReplace <Company Commitment> with \"Company Commitment\" from user input.\nReplace <Manager Mobile Number> with {{ $('Get Allotments').item.json.Name }}'s Mobile Number. Here is the list of everyone's mobile number:1) Abhinav Atmanand : +91 9482456500\n2) Ishaan Balakrishnan : +91 8698018640\n3) Kanishk Kanojia : +91 9953301113\n4) Kaveesh Diwan : +91 7775811272\n5) Koushik Motajigari : +91 6281315916\n6) Madhura Gurav : +91 9834947628\n7) M Rithiha : +91 9487463599\n8) Mukunthan K U : +91 9380180076\n9) Rajakarthikeyan R : +91 8431942480\n10) Srushti Shewalkar : +91 7498400618\n\nMake sure the whole body is properly indented.\n\n#Final Output\nOnly output 2 fields in the final output: \n1) Subject of the mail\n2) Body of the mail in HTML format\nNo summaries and explanations required.\n\n#Notes\n1) Stick to the above format and do not try to make up stuff.\nImportant: because there are bandwidth limitations on APIs, if the number of emails is more than 15, you should label them in batches, you ask for 15 emails label them and then go for the next batch until the end\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        1568,
+        512
+      ],
+      "id": "80ecb1da-d9d1-4cf2-bd31-1531d94142db",
+      "name": "Mail Writer1"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"to\": \"recipient@example.com\",\n  \"subject\": \"Meeting Reminder: Project Sync\",\n  \"body\": \"Hi John,\\n\\nThis is a quick reminder about our sync-up meeting scheduled for tomorrow at 11 AM. Let me know if you’d like to shift the timing.\\n\\nBest,\\nAkshat\"\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1584,
+        704
+      ],
+      "id": "72681ac7-38e3-4a89-86fe-470a41064446",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-flash-lite-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        848
+      ],
+      "id": "9f3593e1-7972-4b92-8988-241f194db178",
+      "name": "Google Gemini Chat Model10",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "yEWAuCieAPLXckax",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Get Allotments').item.json.Type }}",
+                    "rightValue": "New Outreach",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "eb450078-5df9-4794-a542-57e5a9424d59"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "311bf863-4cda-4fa6-86b6-22a052504dc7",
+                    "leftValue": "={{ $('Get Allotments').item.json.Type }}",
+                    "rightValue": "Positive Lead",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5457d58c-7064-4867-bf91-d7495a7b3860",
+                    "leftValue": "={{ $('Get Allotments').item.json.Type }}",
+                    "rightValue": "Confirmed Deal",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        944,
+        496
+      ],
+      "id": "46e6fb36-fbb0-4b6c-89d0-4b6966a66e08",
+      "name": "Type"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-flash-lite-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1216,
+        1168
+      ],
+      "id": "86e19f00-1acc-4e6d-bbbe-35683dc52b8e",
+      "name": "Google Gemini Chat Model11",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "yEWAuCieAPLXckax",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"to\": \"recipient@example.com\",\n  \"subject\": \"Meeting Reminder: Project Sync\",\n  \"body\": \"Hi John,\\n\\nThis is a quick reminder about our sync-up meeting scheduled for tomorrow at 11 AM. Let me know if you’d like to shift the timing.\\n\\nBest,\\nAkshat\"\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1648,
+        1152
+      ],
+      "id": "c8d7d7d7-24b0-47e6-b982-5dce0adccd93",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-flash-lite-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2112,
+        1248
+      ],
+      "id": "314e0065-5c4d-4d9a-9d9b-11ec63fb87b0",
+      "name": "Google Gemini Chat Model12",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "yEWAuCieAPLXckax",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Manager Name :  {{ $json.Manager }}\nCompany Name : {{ $('Get Allotments').item.json['Company Name'] }}\nPoC Name : {{ $('Get Allotments').item.json['PoC Name'] }}\nPoC Email ID : {{ $('Get Allotments').item.json['PoC Email ID'] }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=#Overview\nYou are the ultimate mail drafting assistant. You draft cold mails for E-Cell IIT Madras and send them to company PoCs in HTML format.\n\n#Rules\n1)Send the mail to \"PoC Email ID\" from the user prompt\n\n2)Subject of the mail:\n\nAssociation with Entrepreneurship Cell IIT Madras || <Company Name>\n\nReplace <Company Name> with the actual \"Company Name\" in the user prompt\n\n3) Body of the mail:\n\nHi <strong><PoC Name></strong>,\n<br><br>\nWe at the Entrepreneurship Cell, IIT Madras, hope this email finds you well. I am <strong><Manager Name></strong>, Manager of Corporate Relations at E-Cell IIT Madras. \n<br><br>\nOn behalf of our entire team, I would like to extend our heartfelt gratitude for <strong><Company Name></strong>'s invaluable support during E-Summit 2026. Your partnership played a crucial role in the outstanding success of last year’s summit, which attracted <strong>over 35,000 participants</strong> and <strong>2,500+ startups from across the country</strong>, solidifying its place as one of India’s premier entrepreneurial events.\n<br><br>\nAs we prepare for <strong>E-Summit 2026 in March</strong>, we believe in the importance of nurturing and continuing good relationships. Therefore, carrying forth our successful association from last year, and building on the positive momentum of our previous partnership, we eagerly anticipate the possibility of a mutually beneficial collaboration with you this year as well.\n<br><br>\nWe’d be honored to welcome <strong><Company Name></strong> as an Official Sponsor in 2027. Please find below some of the deliverables from our end:\n<br>\n<ul>\n<li>Recognition as the <strong>Official Sponsor</strong> for E-Summit 2027.</li>\n<li>Opportunity to interact and network with more than <strong>700 early-stage startups</strong> from across the country, selected through a highly competitive process.</li>\n<li>Offline Branding in front of <strong>15,000+</strong> IIT M students, delegates, and professors through standees and banners in strategic locations across the campus</li>\n<li>Opportunity to conduct <strong>exclusive workshops, customized events</strong>, and seminars for the participating startups and students</li>\n<li><strong>Logo integration</strong> on our website and branding opportunity on our social media handles with 50K+ followers, with an even greater reach through our team of 250+ members.</li>\n<li>Sponsor Visibility in the <strong>25,000+ Alumni Network</strong> of IIT Madras via the IIT Madras Alumni Association broadcasting email network that will be sending promotional and invitational emails to the Alumni to participate in the entrepreneurial festival E-Summit of IIT Madras.</li>\n</ul>\n<br>\nExpectations from the sponsor:\n<br>\n<ul>\n<li><strong>Monetary Support</strong>: For the events and initiatives conducted during E-Summit 2027.</li>\n<li>Logo Usage: <strong><Company Name></strong>'s Logo will be used in all the promotional material after the event or conclave launch till the conclusion of the event or conclave.</li>\n<li>Publicity: <strong><Company Name></strong> can, in goodwill, help with the outreach of our events in their ecosystem.</li>\n</ul>\n<br>\nWe are open to fine-tuning these deliverables on mutually agreeable terms. We would love to get on a call to discuss this further in detail.\n<br><br>\nWe look forward to having <strong><Company Name></strong> as our <strong>Official Sponsor</strong> for E-Summit 2027. We hope to hear from you soon and begin a mutually beneficial, long-lasting relationship in a positive direction.\n<br><br><br>\n\nWarm regards,\n<br>\n<strong><Manager Name></strong>\n<br>\n<strong>Manager | Corporate Relations</strong>\n<br>\n<strong>Entrepreneurship-Cell, IIT Madras</strong>\n<br>\n<strong>Email : corporate_ecell@smail.iitm.ac.in</strong>\n<br>\n<strong> Ph : <Manager Mobile Number> </strong>\n\n\nReplace <PoC Name> with \"PoC Name\" from user input.\nReplace <Company Name> with \"Company Name\" from user input.\nReplace <Manager Name> with \"Manager Name\" from user input.\nReplace <Company Commitment> with \"Company Commitment\" from user input.\nReplace <Manager Mobile Number> with {{ $('Get Allotments').item.json.Name }}'s Mobile Number. Here is the list of everyone's mobile number:\n1) Abhinav Atmanand : +91 9482456500\n2) Ishaan Balakrishnan : +91 8698018640\n3) Kanishk Kanojia : +91 9953301113\n4) Kaveesh Diwan : +91 7775811272\n5) Koushik Motajigari : +91 6281315916\n6) Madhura Gurav : +91 9834947628\n7) M Rithiha : +91 9487463599\n8) Mukunthan K U : +91 9380180076\n9) Rajakarthikeyan R : +91 8431942480\n10) Srushti Shewalkar : +91 7498400618\n\nMake sure the whole body is properly indented.\n\n#Final Output\nOnly output 2 fields in the final output: \n1) Subject of the mail\n2) Body of the mail in HTML format\nNo summaries and explanations required.\n\n#Notes\n1) Stick to the above format and do not try to make up stuff.\nImportant: because there are bandwidth limitations on APIs, if the number of emails is more than 15, you should label them in batches, you ask for 15 emails label them and then go for the next batch until the end\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        1328,
+        992
+      ],
+      "id": "816df987-f4cc-450d-a647-ed38c5b08caa",
+      "name": "Mail Writer2"
+    },
+    {
+      "parameters": {
+        "content": "## Main Mail\n",
+        "height": 1424,
+        "width": 3412
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        16,
+        -32
+      ],
+      "id": "caa30417-4b93-4ad1-9e39-ee0833694b61",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1968,
+        496
+      ],
+      "id": "d70c20aa-9c7e-4251-8636-95b33f05fc4a",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "e2441c23-5749-43e4-8e17-2e7959c6c8e2",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        1376,
+        1744
+      ],
+      "id": "dde137d3-7659-4567-993e-55484676d6ab",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0ac4d1f7-e3b4-44c0-b18e-fbbbd4416716",
+              "leftValue": "={{ $json['Reminder 1'] }}",
+              "rightValue": "send",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        1392,
+        1440
+      ],
+      "id": "7c3829f1-b720-494f-bc7f-c42156f814f0",
+      "name": "Filter1"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "\nconst managers = {\n  \"Abhinav Atmanand\": \"+91 9482456500\",\n  \"Ishaan Balakrishnan\": \"+91 8698018640\",\n  \"Kanishk Kanojia\": \"+91 9953301113\",\n  \"Kaveesh Diwan\": \"+91 7775811272\",\n  \"Koushik Motajigari\": \"+91 6281315916\",\n  \"M Rithiha\": \"+91 9487463599\",\n  \"Madhura Gurav\": \"+91 9834947628\",\n  \"Mukunthan K U\": \"+91 9380180076\",\n  \"Rajakarthikeyan R\": \"+91 8431942480\",\n  \"Srushti Shewalkar\": \"+91 7498400618\",\n};\n\nconst managerName = String($json.Manager ?? \"\")\n  .trim()\n  .replace(/\\s+/g, \" \")\n  .toLowerCase();\n\nconst matchedName = Object.keys(managers).find(\n  name => name.toLowerCase() === managerName\n);\n\nif (!matchedName) {\n  throw new Error(\n    `Unknown or missing manager: \"${$json.Manager ?? \"\"}\". Check the Manager column in Google Sheets.`\n  );\n}\n\nconst phone = managers[matchedName];\n\nconst emailSignature =\n  `<b>${matchedName}</b><br>` +\n  `<b>Manager | Corporate Relations</b><br>` +\n  `<b>Entrepreneurship-Cell, IIT Madras</b><br>` +\n  `<b>Email: <a href=\"mailto:corporate_ecell@smail.iitm.ac.in\">corporate_ecell@smail.iitm.ac.in</a></b><br>` +\n  `<b>Ph: ${phone}</b>`;\n\nreturn {\n  ...$json,\n  managerName: matchedName,\n  managerPhone: phone,\n  emailSignature,\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1888,
+        1456
+      ],
+      "id": "77bdeb0f-0809-4f49-9fc7-518e28f6fd9b",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Here are the Manager Names : {{ $('Get Allotments').item.json.Manager }}\nHere are the message ids of the emails to label: {{ $('Send Mail').item.json.id }}",
+        "options": {
+          "systemMessage": "=#Overview\nYou are the ultimate email labelling agent. You assign labels to the sent emails based on the Manager Name assigned with the email.\nImportant: Use only those labels that are inside [] brackets. These are custom labels, and you should ONLY use these ones.\nImportant: Label all the emails. Leave no email unlabelled.\n#Tools\n1) Get Labels: Use this to get all the labels available\n2) Add Label: Use this to add the suitable label to the mail\n#Notes\n-Only use the Manager Name to decide the label for the email. No other parameter is required.\n-Gmail API requires the **label ID**, not the label name.\n-So: Match the Manager Name with the label name, then return the **corresponding ID**.\nImportant: because there are bandwidth limitations on APIs, if the number of emails is more than 15, you should label them in batches, you ask for 15 emails label them and then go for the next batch until the end.\nImportant: The current time is {{ $now }}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        2816,
+        960
+      ],
+      "id": "be5d3e32-82cb-4030-9983-2404de8acdf9",
+      "name": "Label Agent",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-flash-lite-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2640,
+        800
+      ],
+      "id": "499a9bdf-ea66-4dd0-90c1-5c1d0b519510",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "yEWAuCieAPLXckax",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "label",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}"
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        2848,
+        784
+      ],
+      "id": "ded23967-185e-414d-b25c-7b08da019801",
+      "name": "Get Labels",
+      "webhookId": "eb87c893-ec38-4c33-bcf6-94443dbeb2ec",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "7emuhYg7m9zP6pO9",
+          "name": "CR Email"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "\nconst managerLabels = {\n  \"Abhinav Atmanand\": {\n    labelName: \"2027/Abhinav\",\n    labelId: \"Label_6153709484388763408\",\n  },\n  \"Ishaan Balakrishnan\": {\n    labelName: \"2027/Ishaan\",\n    labelId: \"Label_3279170160587268526\",\n  },\n  \"Kanishk Kanojia\": {\n    labelName: \"2027/Kanishk\",\n    labelId: \"Label_2640791887395582434\",\n  },\n  \"Kaveesh Diwan\": {\n    labelName: \"2027/Kaveesh\",\n    labelId: \"Label_121707610963661440\",\n  },\n  \"Koushik Motajigari\": {\n    labelName: \"2027/Koushik\",\n    labelId: \"Label_9171069382879474161\",\n  },\n  \"M Rithiha\": {\n    labelName: \"2027/Rithiha\",\n    labelId: \"Label_5845780356475565529\",\n  },\n  \"Madhura Gurav\": {\n    labelName: \"2027/Madhura\",\n    labelId: \"Label_1343519115044218227\",\n  },\n  \"Mukunthan K U\": {\n    labelName: \"2027/Mukunthan\",\n    labelId: \"Label_5199962979589724720\",\n  },\n  \"Rajakarthikeyan R\": {\n    labelName: \"2027/Rajakarthikeyan\",\n    labelId: \"Label_138660866606417832\",\n  },\n  \"Srushti Shewalkar\": {\n    labelName: \"2027/Srushti\",\n    labelId: \"Label_426613213188142854\",\n  },\n};\n\n// Get the matching allotment item using this item's position\nconst allotments = $(\"Get Allotments\").all();\nconst itemIndex = $itemIndex;\n\nif (!allotments[itemIndex]) {\n  throw new Error(`No matching allotment found for item index ${itemIndex}`);\n}\n\nconst managerName = String(\n  allotments[itemIndex].json.Manager ?? \"\"\n)\n  .trim()\n  .replace(/\\s+/g, \" \");\n\nconst matchedName = Object.keys(managerLabels).find(\n  name => name.toLowerCase() === managerName.toLowerCase()\n);\n\nif (!matchedName) {\n  throw new Error(`No label mapping found for manager: \"${managerName}\"`);\n}\n\nconst { labelName, labelId } = managerLabels[matchedName];\n\nreturn {\n  ...$json,\n  matchedManager: matchedName,\n  labelName,\n  labelId,\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2752,
+        272
+      ],
+      "id": "c1ca9555-2abf-4bf8-8368-237ba6c0b1ca",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "85e73459-bd0c-4092-bdaa-72bfeb28fb02",
+              "leftValue": "={{ $json.Status }}",
+              "rightValue": "send",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        528,
+        496
+      ],
+      "id": "4bf1dfa2-edbf-4ebc-af29-641d03939e24",
+      "name": "Filter2"
+    },
+    {
+      "parameters": {
+        "resource": "thread",
+        "operation": "addLabels",
+        "threadId": "={{ $('Send Mail').item.json.threadId }}",
+        "labelIds": "={{ $json.labelId }}"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2960,
+        272
+      ],
+      "id": "28c909f7-5dd3-49ae-9ee8-d4911161e353",
+      "name": "Add label to thread",
+      "webhookId": "557ad917-97c7-463e-b421-757285bf23d1",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "7emuhYg7m9zP6pO9",
+          "name": "CR Email"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Mail Writer",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Mail Writer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Allotments": {
+      "main": [
+        [
+          {
+            "node": "Filter2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mail Writer": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Mail": {
+      "main": [
+        [
+          {
+            "node": "Update Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Sheet": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Main Mail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Allotments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reminder 1 Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Allotments1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Allotments1": {
+      "main": [
+        [
+          {
+            "node": "Filter1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reminder 2 Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Allotments2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Allotments2": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Reminder 1": {
+      "main": [
+        [
+          {
+            "node": "Update Sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Reminder 2": {
+      "main": [
+        [
+          {
+            "node": "Update Sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reminder 3 Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Allotments3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Allotments3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Reminder 3": {
+      "main": [
+        [
+          {
+            "node": "Update Sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reminder 4 Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Allotments4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Allotments4": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Reminder 4": {
+      "main": [
+        [
+          {
+            "node": "Update Sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Commitment Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Commitment Generator": {
+      "main": [
+        [
+          {
+            "node": "Mail Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Reminder 2 Writer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Reminder 3 Writer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Reminder 4 Writer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reminder 3 Writer": {
+      "main": [
+        [
+          {
+            "node": "Send Reminder 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reminder 4 Writer": {
+      "main": [
+        [
+          {
+            "node": "Send Reminder 4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reminder 2 Writer": {
+      "main": [
+        [
+          {
+            "node": "Send Reminder 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model7": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        []
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Sheet1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items3": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Reminder 2 Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Sheet2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items4": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Reminder 3 Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Sheet3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items5": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Reminder 4 Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Sheet4": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model8": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Commitment Generator1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Commitment Generator1": {
+      "main": [
+        [
+          {
+            "node": "Mail Writer1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model9": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Mail Writer1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mail Writer1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Mail Writer1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model10": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Type": {
+      "main": [
+        [
+          {
+            "node": "Commitment Generator",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Commitment Generator1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mail Writer2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model11": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Mail Writer2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Mail Writer2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model12": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mail Writer2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Send Mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send Reminder 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Label Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Label Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Labels": {
+      "ai_tool": [
+        [
+          {
+            "node": "Label Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Add label to thread",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add label to thread": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true
+  },
+  "versionId": "54439d6e-fb87-4b40-acf6-c244ea2b20c0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0f3c29e7c16f8c6486ad4cdc5ba11e621f20249097fc4d8bed9dbf240ef9c7b6"
+  },
+  "nodeGroups": [],
+  "id": "iktENWIZoYD54vOy",
+  "tags": []
+}
